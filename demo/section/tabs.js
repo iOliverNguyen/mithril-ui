@@ -1,7 +1,6 @@
 
 define('section/tabs', function(require, module, exports) {
 
-/** @jsx m */
 module.exports = function(config) {
 
   function controller() {
@@ -22,38 +21,53 @@ module.exports = function(config) {
     config.forEach(function(c, i) {
       var extraClass = c.class || '';
       var active = ctrl.index() === i ? ' active' : '';
-      tabs.push(
-        m("li", {
+      tabs.push({
+        tag: "li",
+        attrs: {
           class: extraClass + active
-        }, [
-          m("a", {
+        },
+        children: [{
+          tag: "a",
+          attrs: {
             href: "#",
             onclick: m.u.mute(m.u.bind(ctrl.index, ctrl, i))
-          }, [
+          },
+          children: [
             config[i].label
-          ])
-        ])
-      );
-      panes.push(
-        m("div", {
+          ]
+        }]
+      });
+      panes.push({
+        tag: "div",
+        attrs: {
           class: extraClass + " tab-pane" + active
-        }, [
+        },
+        children: [
           ctrl.coms[i].$view()
-        ])
-      );
+        ]
+      });
     });
-    return m("div", [
-      m("ul", {
-        class: "nav nav-tabs"
-      }, [
-        tabs
-      ]),
-      m("div", {
-        class: "tab-content"
-      }, [
-        panes
-      ])
-    ]);
+    return {
+      tag: "div",
+      attrs: {},
+      children: [{
+        tag: "ul",
+        attrs: {
+          class: "nav nav-tabs"
+        },
+        children: [
+          tabs
+        ]
+      }, {
+        tag: "div",
+        attrs: {
+          class: "tab-content"
+        },
+        children: [
+          panes
+        ]
+      }]
+    };
   }
 
   return {

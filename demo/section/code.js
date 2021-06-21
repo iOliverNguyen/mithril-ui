@@ -1,24 +1,10 @@
 
 define('section/code', function(require, module, exports) {
 
-/** @jsx m */
-var start = '// START';
-var end = '// END';
-var r = new RegExp(start + '([\\s\\S]*)' + end);
-
-module.exports = function(filepath) {
+module.exports = function(code) {
 
   function controller() {
-    m.request({
-      method: 'GET',
-      url: filepath,
-      deserialize: deserialize.bind(this)
-    });
 
-    function deserialize(v) {
-      var matches = r.exec(v);
-      this.code = matches ? matches[1].trim() : v;
-    }
   }
 
   function view(ctrl) {
@@ -28,13 +14,19 @@ module.exports = function(filepath) {
       }
     }
 
-    return m("pre", [
-      m("code", {
-        config: highlight
-      }, [
-        ctrl.code
-      ])
-    ]);
+    return {
+      tag: "pre",
+      attrs: {},
+      children: [{
+        tag: "code",
+        attrs: {
+          config: highlight
+        },
+        children: [
+          code
+        ]
+      }]
+    };
   }
 
   return {

@@ -1,7 +1,6 @@
 
 define('main', function(require, module, exports) {
 
-/** @jsx m */
 var about = require('about/about');
 var home = require('home/home');
 var layout = require('layout/layout');

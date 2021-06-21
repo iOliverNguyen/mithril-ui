@@ -1,7 +1,6 @@
 
 define('layout/layout', function(require, module, exports) {
 
-/** @jsx m */
 var u = m.u;
 
 function layout($module) {
@@ -18,82 +17,132 @@ function layout($module) {
     var tabs = [];
     for (var i = 0; i < ctrl.tabs.length; i++) {
       var tab = ctrl.tabs[i];
-      tabs.push(
-        m("li", {
+      tabs.push({
+        tag: "li",
+        attrs: {
           class: isActive(tab.href)
-        }, [
-          m("a", {
+        },
+        children: [{
+          tag: "a",
+          attrs: {
             href: tab.href,
             config: m.route
-          }, [tab.label])
-        ])
-      );
+          },
+          children: [tab.label]
+        }]
+      });
     }
 
     function isActive(r) {
       return m.route() === r ? 'active' : '';
     }
 
-    return m("div", {
-      class: "page"
-    }, [
-      /** @jsx m */
-      m("header", {
-        class: "navbar navbar-fixed-top navbar-default"
-      }, [
-        m("div", {
-          class: "container"
-        }, [
-          m("div", {
-            class: "navbar-header"
-          }, [
-            m("a", {
-              class: "navbar-brand"
-            }, ["Mithril Bootstrap"])
-          ]),
-          m("nav", [
-            m("ul", {
-              class: "nav navbar-nav"
-            }, [
-              m("li", [m("a", {
-                target: "_blank",
-                href: "https://github.com/olvrng/mithril-bootstrap"
-              }, ["GitHub"])])
-            ]),
-            m("ul", {
-              class: "nav navbar-nav navbar-right"
-            }, [
-              m("li", [m("a", {
-                target: "_blank",
-                href: "http://lhorie.github.io/mithril/"
-              }, ["Mithril"])])
-            ])
-          ])
-        ])
-      ]),
-      m("div", {
-        class: "navbar-space"
-      }),
+    return {
+      tag: "div",
+      attrs: {
+        class: "page"
+      },
+      children: [{
+          tag: "header",
+          attrs: {
+            class: "navbar navbar-fixed-top navbar-default"
+          },
+          children: [{
+            tag: "div",
+            attrs: {
+              class: "container"
+            },
+            children: [{
+              tag: "div",
+              attrs: {
+                class: "navbar-header"
+              },
+              children: [{
+                tag: "a",
+                attrs: {
+                  class: "navbar-brand"
+                },
+                children: ["Mithril Bootstrap"]
+              }]
+            }, {
+              tag: "nav",
+              attrs: {},
+              children: [{
+                tag: "ul",
+                attrs: {
+                  class: "nav navbar-nav"
+                },
+                children: [{
+                  tag: "li",
+                  attrs: {},
+                  children: [{
+                    tag: "a",
+                    attrs: {
+                      target: "_blank",
+                      href: "https://github.com/olvrng/mithril-bootstrap"
+                    },
+                    children: ["GitHub"]
+                  }]
+                }]
+              }, {
+                tag: "ul",
+                attrs: {
+                  class: "nav navbar-nav navbar-right"
+                },
+                children: [{
+                  tag: "li",
+                  attrs: {},
+                  children: [{
+                    tag: "a",
+                    attrs: {
+                      target: "_blank",
+                      href: "https://mithril.js.org"
+                    },
+                    children: ["Mithril"]
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }, {
+          tag: "div",
+          attrs: {
+            class: "navbar-space"
+          }
+        },
 
-      m("div", {
-        class: "container main-page"
-      }, [
-        ctrl.com.$view()
-      ]),
+        {
+          tag: "div",
+          attrs: {
+            class: "container main-page"
+          },
+          children: [
+            ctrl.com.$view()
+          ]
+        },
 
-      /** @jsx m */
-      m("footer", [
-        m("div", {
-          class: "container"
-        }, [
-          "Mithril-Bootstrap - ",
-          m("a", {
-            href: "https://github.com/olvrng/mithril-bootstrap/blob/master/LICENSE"
-          }, ["MIT License"])
-        ])
-      ])
+        {
+          tag: "footer",
+          attrs: {},
+          children: [{
+            tag: "div",
+            attrs: {
+              class: "container"
+            },
+            children: [
+              "Mithril-Bootstrap - ", {
+                tag: "a",
+                attrs: {
+                  href: "https://github.com/olvrng/mithril-bootstrap/blob/master/LICENSE"
+                },
+                children: ["MIT License"]
+              }
+            ]
+          }]
+        }
 
-    ]);
+      ]
+    };
   }
 
   return {
